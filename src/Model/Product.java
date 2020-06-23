@@ -1,87 +1,115 @@
 package Model;
 
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-    private int productID;
-    private String productName;
-    private double productPrice;
-    private int productStock;
-    private int min;
-    private int max;
+    private final IntegerProperty productID;
+    private final StringProperty productName;
+    private final DoubleProperty productPrice;
+    private final IntegerProperty productStock;
+    private final IntegerProperty minProductStock;
+    private final IntegerProperty maxProductStock;
 
-    public Product(int productID, String productName, double productPrice, int productStock, int min, int max) {
-        this.productID = productID;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productStock = productStock;
-        this.min = min;
-        this.max = max;
+    public Product() {
+        this.productID = new SimpleIntegerProperty();
+        this.productName = new SimpleStringProperty();
+        this.productPrice = new SimpleDoubleProperty();
+        this.productStock = new SimpleIntegerProperty();
+        this.minProductStock = new SimpleIntegerProperty();
+        this.maxProductStock = new SimpleIntegerProperty();
     }
 
     public int getProductID() {
+        return productID.get();
+    }
+
+    public IntegerProperty productIDProperty() {
         return productID;
     }
 
     public void setProductID(int productID) {
-        this.productID = productID;
+        this.productID.set(productID);
     }
 
     public String getProductName() {
+        return productName.get();
+    }
+
+    public StringProperty productNameProperty() {
         return productName;
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName.set(productName);
     }
 
     public double getProductPrice() {
+        return productPrice.get();
+    }
+
+    public DoubleProperty productPriceProperty() {
         return productPrice;
     }
 
     public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
+        this.productPrice.set(productPrice);
     }
 
     public int getProductStock() {
+        return productStock.get();
+    }
+
+    public IntegerProperty productStockProperty() {
         return productStock;
     }
 
     public void setProductStock(int productStock) {
-        this.productStock = productStock;
+        this.productStock.set(productStock);
     }
 
-    public int getMin() {
-        return min;
+    public int getMinProductStock() {
+        return minProductStock.get();
     }
 
-    public void setMin(int min) {
-        this.min = min;
+    public IntegerProperty minProductStockProperty() {
+        return minProductStock;
     }
 
-    public int getMax() {
-        return max;
+    public void setMinProductStock(int minProductStock) {
+        this.minProductStock.set(minProductStock);
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public int getMaxProductStock() {
+        return maxProductStock.get();
     }
 
-//    public void addAssociatedPart(Part part) {
-//        //TO DO
-//    }
-//
-//    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
-//        //TO DO
-//    }
-//
-//    public ObservableList<Part> getAllAssociatedParts(){
-//        //TO DO
-//    }
+    public IntegerProperty maxProductStockProperty() {
+        return maxProductStock;
+    }
 
+    public void setMaxProductStock(int maxProductStock) {
+        this.maxProductStock.set(maxProductStock);
+    }
 
+    public ObservableList<Part> getAllAssociatedParts() {
+        return associatedParts;
+    }
 
+    public void addAssociatedPart(Part partAdded) {
+        this.associatedParts.add(partAdded);
+    }
+
+    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+        for (int i = 0; i < associatedParts.size(); i++) {
+            if (selectedAssociatedPart.equals(associatedParts.get(i).getPartID())) {
+                associatedParts.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

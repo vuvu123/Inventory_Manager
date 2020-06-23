@@ -52,13 +52,13 @@ public class MainScreenController implements Initializable {
         addPartStage.show();
     }
 
-    public void modifyProductScreenButton(ActionEvent event) throws IOException {
-        //add selected items on grid
-        Parent modifyProductParent = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
-        Scene modifyProductScene = new Scene(modifyProductParent);
-        Stage modifyProductStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        modifyProductStage.setScene(modifyProductScene);
-        modifyProductStage.show();
+    public void modifyPartScreenButton(ActionEvent event) throws IOException {
+        // add selected items on grid
+        Parent modifyPartParent = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
+        Scene modifyPartScene = new Scene(modifyPartParent);
+        Stage modifyPartStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        modifyPartStage.setScene(modifyPartScene);
+        modifyPartStage.show();
     }
 
     public void deletePartButton(ActionEvent event) {
@@ -77,13 +77,13 @@ public class MainScreenController implements Initializable {
         addProductStage.show();
     }
 
-    public void modifyPartScreenButton(ActionEvent event) throws IOException {
-        // add selected items on grid
-        Parent modifyPartParent = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
-        Scene modifyPartScene = new Scene(modifyPartParent);
-        Stage modifyPartStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        modifyPartStage.setScene(modifyPartScene);
-        modifyPartStage.show();
+    public void modifyProductScreenButton(ActionEvent event) throws IOException {
+        //add selected items on grid
+        Parent modifyProductParent = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
+        Scene modifyProductScene = new Scene(modifyProductParent);
+        Stage modifyProductStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        modifyProductStage.setScene(modifyProductScene);
+        modifyProductStage.show();
     }
 
     public void deleteProductButton(ActionEvent event) {

@@ -1,18 +1,24 @@
 package Model;
 
+import javafx.beans.property.IntegerProperty;
+
 public class InHouse extends Part{
-    private int machineID;
+    private final IntegerProperty machineID;
 
-    public InHouse(int partID, String partName, double partPrice, int partStock, int min, int max) {
+    public InHouse(int partID, String partName, double partPrice, int partStock, int min, int max, IntegerProperty machineID) {
         super(partID, partName, partPrice, partStock, min, max);
-    }
-
-    public void setMachineId(int machineID) {
         this.machineID = machineID;
     }
 
     public int getMachineID() {
-        return this.machineID;
+        return machineID.get();
     }
 
+    public IntegerProperty machineIDProperty() {
+        return machineID;
+    }
+
+    public void setMachineID(int machineID) {
+        this.machineID.set(machineID);
+    }
 }
