@@ -7,8 +7,8 @@ public class Inventory {
 
     private ObservableList<Part> allParts = FXCollections.observableArrayList();
     private ObservableList<Product> allProducts = FXCollections.observableArrayList();
-    private int partID = 0;
-    private int productID = 0;
+    private int partIDCount = 0;
+    private int productIDCount = 0;
 
     public void addPart(Part newPart) {
         this.allParts.add(newPart);
@@ -64,6 +64,14 @@ public class Inventory {
             }
         }
         return false;
+    }
+
+    public int getPartIDCount() {
+        return partIDCount++;
+    }
+
+    public int getProductIDCount() {
+        return productIDCount++;
     }
 
     public ObservableList<Part> getAllParts() {
