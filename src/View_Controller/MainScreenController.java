@@ -1,9 +1,12 @@
 package View_Controller;
 
+import Model.InHouse;
 import Model.Inventory;
 import Model.Part;
 import Model.Product;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,20 +14,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static Model.Inventory.getAllParts;
+import static Model.Inventory.getAllProducts;
 
 public class MainScreenController implements Initializable {
 
     @FXML private TableView<Part> partsTableView;
-    @FXML private TableView<Product> productTableView;
+    @FXML private TableView<Product> productsTableView;
 
     @FXML private TableColumn<Part, Integer> partIDTableColumn;
     @FXML private TableColumn<Part, String> partNameTableColumn;
@@ -39,9 +44,28 @@ public class MainScreenController implements Initializable {
     @FXML private TextField partSearchTextField;
     @FXML private TextField productSearchTextField;
 
+    private static Part selectedPart;
+    private static int selectedPartIndex;
+    private static Product selectedProduct;
+    private static int selectedProductIndex;
+
 
     public void exitProgramButton(ActionEvent event) {
-        Platform.exit();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Program");
+        alert.setHeaderText("Confirm exit.");
+        alert.setContentText("Are you sure you want to exit? (Yes/No)");
+
+        ButtonType yes = new ButtonType("Yes");
+        ButtonType no = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(yes, no);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == yes)
+            Platform.exit();
+        else
+            System.out.println("Exit cancelled");
     }
 
     public void addPartScreenButton(ActionEvent event) throws IOException {
@@ -53,12 +77,22 @@ public class MainScreenController implements Initializable {
     }
 
     public void modifyPartScreenButton(ActionEvent event) throws IOException {
-        // add selected items on grid
-        Parent modifyPartParent = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
-        Scene modifyPartScene = new Scene(modifyPartParent);
-        Stage modifyPartStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        modifyPartStage.setScene(modifyPartScene);
-        modifyPartStage.show();
+        selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+        selectedPartIndex = getAllParts().indexOf(selectedPart);
+
+        if (selectedPart == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify Part Error");
+            alert.setHeaderText("Unable to modify part!");
+            alert.setContentText("No part selected!");
+            alert.showAndWait();
+        } else {
+            Parent modifyPartParent = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
+            Scene modifyPartScene = new Scene(modifyPartParent);
+            Stage modifyPartStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            modifyPartStage.setScene(modifyPartScene);
+            modifyPartStage.show();
+        }
     }
 
     public void deletePartButton(ActionEvent event) {
@@ -78,12 +112,22 @@ public class MainScreenController implements Initializable {
     }
 
     public void modifyProductScreenButton(ActionEvent event) throws IOException {
-        //add selected items on grid
-        Parent modifyProductParent = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
-        Scene modifyProductScene = new Scene(modifyProductParent);
-        Stage modifyProductStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        modifyProductStage.setScene(modifyProductScene);
-        modifyProductStage.show();
+        selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
+        selectedProductIndex = getAllProducts().indexOf(selectedProduct);
+
+        if (selectedProduct == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify Product Error");
+            alert.setHeaderText("Unable to modify product!");
+            alert.setContentText("No product selected!");
+            alert.showAndWait();
+        } else {
+            Parent modifyProductParent = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
+            Scene modifyProductScene = new Scene(modifyProductParent);
+            Stage modifyProductStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            modifyProductStage.setScene(modifyProductScene);
+            modifyProductStage.show();
+        }
     }
 
     public void deleteProductButton(ActionEvent event) {
@@ -95,9 +139,31 @@ public class MainScreenController implements Initializable {
     }
 
 
+    public void updatePartsTableView() {
+        partsTableView.setItems(getAllParts());
+    }
+
+    public void updateProductsTableView() {
+        productsTableView.setItems(getAllProducts());
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // set up columns in table
+        partIDTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partID"));
+        partNameTableColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
+        partInvTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partStock"));
+        partPriceTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPrice"));
 
+        productIDTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
+        productNameTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        productInvTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productStock"));
+        productPriceTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("productPrice"));
+
+        updatePartsTableView();
+        updateProductsTableView();
     }
+
 }

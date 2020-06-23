@@ -5,20 +5,20 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
 
-    private ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
-    private int partIDCount = 0;
-    private int productIDCount = 0;
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static int partIDCount = 0;
+    private static int productIDCount = 0;
 
-    public void addPart(Part newPart) {
-        this.allParts.add(newPart);
+    public static void addPart(Part newPart) {
+        allParts.add(newPart);
     }
 
-    public void addProduct(Product newProduct) {
-        this.allProducts.add(newProduct);
+    public static void addProduct(Product newProduct) {
+        allProducts.add(newProduct);
     }
 
-    public Part lookUpPart(int partID) {
+    public static Part lookUpPart(int partID) {
         if (!allParts.isEmpty()) {
             for (Part part : allParts) {
                 if (partID == part.getPartID())
@@ -28,7 +28,7 @@ public class Inventory {
         return null;
     }
 
-    public Product lookUpProduct(int productID) {
+    public static Product lookUpProduct(int productID) {
         if (!allProducts.isEmpty()) {
             for (Product product : allProducts) {
                 if (product.getProductID() == productID)
@@ -38,48 +38,48 @@ public class Inventory {
         return null;
     }
 
-    public void updatePart(int index, Part selectedPart) {
+    public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }
 
-    public void updateProduct(int index, Product selectedProduct) {
+    public static void updateProduct(int index, Product selectedProduct) {
         allProducts.set(index, selectedProduct);
     }
 
-    public boolean deletePart(Part selectedPart) {
+    public static boolean deletePart(Part selectedPart) {
         for (Part part : allParts) {
             if (part.getPartID() == selectedPart.getPartID()) {
-                this.allParts.remove(part);
+                allParts.remove(part);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean deleteProduct(Product selectedProduct) {
+    public static boolean deleteProduct(Product selectedProduct) {
         for (Product product : allProducts) {
             if (product.getProductID() == selectedProduct.getProductID()) {
-                this.allProducts.remove(product);
+                allProducts.remove(product);
                 return true;
             }
         }
         return false;
     }
 
-    public int getPartIDCount() {
+    public static int getPartIDCount() {
         return partIDCount++;
     }
 
-    public int getProductIDCount() {
+    public static int getProductIDCount() {
         return productIDCount++;
     }
 
-    public ObservableList<Part> getAllParts() {
-        return this.allParts;
+    public static ObservableList<Part> getAllParts() {
+        return allParts;
     }
 
-    public ObservableList<Product> getAllProducts() {
-        return this.allProducts;
+    public static ObservableList<Product> getAllProducts() {
+        return allProducts;
     }
 
 
