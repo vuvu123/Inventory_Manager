@@ -25,16 +25,16 @@ public class Main extends Application {
 
     public static void setTestData() {
         //Add Parts
-        Part ih1 = new InHouse(1, "Part One", 19.99, 5, 1, 50, 100);
-        Part ih2 = new InHouse(2, "Part Two", 29.99, 5, 1, 50, 100);
-        Part ih3 = new InHouse(3, "Part Three", 14.99, 5, 1, 50, 101);
+        Part ih1 = new InHouse(1000, "Part One", 19.99, 5, 1, 50, 100);
+        Part ih2 = new InHouse(1001, "Part Two", 29.99, 5, 1, 50, 100);
+        Part ih3 = new InHouse(1002, "Part Three", 14.99, 5, 1, 50, 101);
         Inventory.addPart(ih1);
         Inventory.addPart(ih2);
         Inventory.addPart(ih3);
 
-        Part os1 = new OutSourced(4, "Bike Wheel", 29.99, 10, 1, 30, "Vitus");
-        Part os2 = new OutSourced(5, "Bike Frame", 24.99, 10, 1, 30, "GT");
-        Part os3 = new OutSourced(6, "Bike Brakes", 15.99, 10, 1, 30, "Trek");
+        Part os1 = new OutSourced(1003, "Bike Wheel", 29.99, 10, 1, 30, "Vitus");
+        Part os2 = new OutSourced(1004, "Bike Frame", 24.99, 10, 1, 30, "GT");
+        Part os3 = new OutSourced(1005, "Bike Brakes", 15.99, 10, 1, 30, "Trek");
 
         Inventory.addPart(os1);
         Inventory.addPart(os2);

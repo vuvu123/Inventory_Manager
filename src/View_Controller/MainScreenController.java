@@ -95,12 +95,17 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void deletePartButton(ActionEvent event) {
+    public void deletePartButton(ActionEvent event) throws IOException {
         // TO DO
     }
 
-    public void searchPartButton(ActionEvent event) {
-        // TO DO
+    public void searchPartButton(ActionEvent event) throws IOException {
+        String partSearch = partSearchTextField.getText();
+        selectedPartIndex = -1;
+
+//        if (Inventory.lookUpPart(partSearch) )
+
+
     }
 
     public void addProductScreenButton(ActionEvent event) throws IOException {
@@ -130,11 +135,11 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void deleteProductButton(ActionEvent event) {
+    public void deleteProductButton(ActionEvent event) throws IOException {
         // TO DO
     }
 
-    public void searchProductButton(ActionEvent event) {
+    public void searchProductButton(ActionEvent event) throws IOException {
         // TO DO
     }
 
