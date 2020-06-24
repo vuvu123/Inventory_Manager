@@ -82,6 +82,7 @@ public class AddPartController implements Initializable {
         partIDTextField.setEditable(false);
         partIDTextField.setText(String.valueOf(partID));
 
+        // Set radio buttons to toggleGroup partType
         inHouseRadioButton.setToggleGroup(partType);
         outSourcedRadioButton.setToggleGroup(partType);
 

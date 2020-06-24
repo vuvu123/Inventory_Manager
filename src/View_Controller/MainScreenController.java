@@ -143,6 +143,16 @@ public class MainScreenController implements Initializable {
         // TO DO
     }
 
+    public void clearSearchPart(ActionEvent event) throws IOException {
+        updatePartsTableView();
+        partSearchTextField.setText("");
+    }
+
+    public void clearSearchProduct(ActionEvent event) throws IOException {
+        updateProductsTableView();
+        productSearchTextField.setText("");
+    }
+
 
     public void updatePartsTableView() {
         partsTableView.setItems(getAllParts());
