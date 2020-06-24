@@ -1,9 +1,6 @@
 package View_Controller;
 
-import Model.InHouse;
-import Model.Inventory;
-import Model.Part;
-import Model.Product;
+import Model.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +45,8 @@ public class MainScreenController implements Initializable {
     private static int selectedPartIndex;
     private static Product selectedProduct;
     private static int selectedProductIndex;
+
+    private boolean entered = false;
 
 
     public void exitProgramButton(ActionEvent event) {
@@ -147,20 +146,31 @@ public class MainScreenController implements Initializable {
         productsTableView.setItems(getAllProducts());
     }
 
+    public void setTestData() {
+        Part partA = new InHouse(1, "Part One", 19.99, 5, 1, 50, 1);
+        Inventory.addPart(partA);
+        Part osA = new OutSourced(2, "Bike Part", 29.99, 10, 1, 30, "Vitus");
+        Inventory.addPart(osA);
+    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // set up columns in table
-        partIDTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partID"));
-        partNameTableColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
-        partInvTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partStock"));
-        partPriceTableColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPrice"));
+        if (!entered) {
+            setTestData();
+            entered = true;
+        }
 
-        productIDTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productID"));
-        productNameTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
-        productInvTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productStock"));
-        productPriceTableColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("productPrice"));
+        // set up columns in table
+        partIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));
+        partNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("partName"));
+        partInvTableColumn.setCellValueFactory(new PropertyValueFactory<>("partStock"));
+        partPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("partPrice"));
+
+        productIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("productID"));
+        productNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        productInvTableColumn.setCellValueFactory(new PropertyValueFactory<>("productStock"));
+        productPriceTableColumn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
 
         updatePartsTableView();
         updateProductsTableView();
