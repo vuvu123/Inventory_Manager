@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Main.Main;
 import Model.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -46,7 +47,7 @@ public class MainScreenController implements Initializable {
     private static Product selectedProduct;
     private static int selectedProductIndex;
 
-    private boolean entered = false;
+    static boolean entered;
 
 
     public void exitProgramButton(ActionEvent event) {
@@ -146,22 +147,14 @@ public class MainScreenController implements Initializable {
         productsTableView.setItems(getAllProducts());
     }
 
-    public void setTestData() {
-        Part partA = new InHouse(1, "Part One", 19.99, 5, 1, 50, 1);
-        Inventory.addPart(partA);
-        Part osA = new OutSourced(2, "Bike Part", 29.99, 10, 1, 30, "Vitus");
-        Inventory.addPart(osA);
-    }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!entered) {
-            setTestData();
+        if(!entered) {
+            Main.setTestData();
             entered = true;
         }
 
-        // set up columns in table
         partIDTableColumn.setCellValueFactory(new PropertyValueFactory<>("partID"));
         partNameTableColumn.setCellValueFactory(new PropertyValueFactory<>("partName"));
         partInvTableColumn.setCellValueFactory(new PropertyValueFactory<>("partStock"));
