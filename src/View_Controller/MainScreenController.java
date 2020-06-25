@@ -46,11 +46,18 @@ public class MainScreenController implements Initializable {
     private static int selectedPartIndex;
     private static Product selectedProduct;
     private static int selectedProductIndex;
-
     static boolean entered;
 
+    public static int getSelectedPartIndex() {
+        return selectedPartIndex;
+    }
 
-    public void exitProgramButton(ActionEvent event) {
+    public static int getSelectedProductIndex() {
+        return selectedProductIndex;
+    }
+
+    @FXML
+    private void exitProgramButton(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit Program");
         alert.setHeaderText("Confirm exit.");
@@ -68,7 +75,8 @@ public class MainScreenController implements Initializable {
             System.out.println("Exit cancelled");
     }
 
-    public void addPartScreenButton(ActionEvent event) throws IOException {
+    @FXML
+    private void addPartScreenButton(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
         Scene addPartScene = new Scene(addPartParent);
         Stage addPartStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -76,7 +84,8 @@ public class MainScreenController implements Initializable {
         addPartStage.show();
     }
 
-    public void modifyPartScreenButton(ActionEvent event) throws IOException {
+    @FXML
+    private void modifyPartScreenButton(ActionEvent event) throws IOException {
         selectedPart = partsTableView.getSelectionModel().getSelectedItem();
         selectedPartIndex = getAllParts().indexOf(selectedPart);
 
@@ -95,20 +104,38 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void deletePartButton(ActionEvent event) throws IOException {
-        // TO DO
+    @FXML
+    private void deletePartButton(ActionEvent event) throws IOException {
+        int selectedIndex = partsTableView.getSelectionModel().getSelectedIndex();
+
+        // Need to add prompt to confirm deletion of part
+
+        if (selectedIndex >= 0) {
+            partsTableView.getItems().remove(selectedPartIndex);
+        } else {
+            // Nothing selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No selection");
+            alert.setHeaderText("No Part Selected");
+            alert.setContentText("Please select a part on the table.");
+            alert.showAndWait();
+        }
     }
 
-    public void searchPartButton(ActionEvent event) throws IOException {
-        String partSearch = partSearchTextField.getText();
-        selectedPartIndex = -1;
+    @FXML
+    private void searchPartButton(ActionEvent event) throws IOException {
+        String searchPart = partSearchTextField.getText();
 
-//        if (Inventory.lookUpPart(partSearch) )
+//        if (!partSearchTextField.getText().trim().isEmpty()) {
+//            partsTableView.setItems(Inventory.lookUpPart(searchPart));
+//        }
+
 
 
     }
 
-    public void addProductScreenButton(ActionEvent event) throws IOException {
+    @FXML
+    private void addProductScreenButton(ActionEvent event) throws IOException {
         Parent addProductParent = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
         Scene addProductScene = new Scene(addProductParent);
         Stage addProductStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -116,7 +143,8 @@ public class MainScreenController implements Initializable {
         addProductStage.show();
     }
 
-    public void modifyProductScreenButton(ActionEvent event) throws IOException {
+    @FXML
+    private void modifyProductScreenButton(ActionEvent event) throws IOException {
         selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
         selectedProductIndex = getAllProducts().indexOf(selectedProduct);
 
@@ -135,20 +163,37 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void deleteProductButton(ActionEvent event) throws IOException {
+    @FXML
+    private void deleteProductButton(ActionEvent event) throws IOException {
+        int selectedIndex = productsTableView.getSelectionModel().getSelectedIndex();
+
+        // Need to add confirm alert box if
+
+        if (selectedIndex >= 0) {
+            productsTableView.getItems().remove(selectedProductIndex);
+        } else {
+            // Nothing selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No selection");
+            alert.setHeaderText("No Product Selected");
+            alert.setContentText("Please select a product on the table.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void searchProductButton(ActionEvent event) throws IOException {
         // TO DO
     }
 
-    public void searchProductButton(ActionEvent event) throws IOException {
-        // TO DO
-    }
-
-    public void clearSearchPart(ActionEvent event) throws IOException {
+    @FXML
+    private void clearSearchPart(ActionEvent event) throws IOException {
         updatePartsTableView();
         partSearchTextField.setText("");
     }
 
-    public void clearSearchProduct(ActionEvent event) throws IOException {
+    @FXML
+    private void clearSearchProduct(ActionEvent event) throws IOException {
         updateProductsTableView();
         productSearchTextField.setText("");
     }

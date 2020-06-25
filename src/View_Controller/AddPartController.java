@@ -8,14 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
@@ -37,15 +35,27 @@ public class AddPartController implements Initializable {
     private int partID;
     private boolean isOutsourced;
 
-    public void openMainScreen(ActionEvent event) throws IOException {
-        Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        Scene mainScreenScene = new Scene(mainScreenParent);
-        Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        mainScreenStage.setScene(mainScreenScene);
-        mainScreenStage.show();
+    @FXML
+    private void openMainScreen(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel");
+        alert.setHeaderText("Confirm Cancellation");
+        alert.setContentText("Are you sure you want to cancel?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+            Scene mainScreenScene = new Scene(mainScreenParent);
+            Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            mainScreenStage.setScene(mainScreenScene);
+            mainScreenStage.show();
+        } else {
+            System.out.println("Cancelled.");
+        }
     }
 
-    public void addPartSaveButtonClicked(ActionEvent event) throws IOException {
+    @FXML
+    private void addPartSaveButtonClicked(ActionEvent event) throws IOException {
         String partName = partNameTextField.getText();
         String partInv = partInvTextField.getText();
         String partPrice = partPriceTextField.getText();
@@ -60,7 +70,8 @@ public class AddPartController implements Initializable {
         }
     }
 
-    public void inHouseRadioButtonSelected() {
+    @FXML
+    private void inHouseRadioButtonSelected() {
         inHouseOutSourceLabel.setText("Machine ID");
         partIDNameTextField.setPromptText("Machine ID");
         inHouseRadioButton.setSelected(true);
@@ -68,7 +79,8 @@ public class AddPartController implements Initializable {
 
     }
 
-    public void outSourcedRadioButtonSelected() {
+    @FXML
+    private void outSourcedRadioButtonSelected() {
         isOutsourced = true;
         inHouseOutSourceLabel.setText("Company Name");
         partIDNameTextField.setPromptText("Company Name");

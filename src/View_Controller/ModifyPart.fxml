@@ -15,11 +15,11 @@
                 <Font name="System Bold" size="22.0" />
             </font>
         </Label>
-        <RadioButton fx:id="inHouseRadioButton" layoutX="167.0" layoutY="39.0" mnemonicParsing="false" text="In-House">
+        <RadioButton fx:id="inHouseRadioButton" layoutX="167.0" layoutY="39.0" mnemonicParsing="false" onAction="#inHouseRadioButtonSelected" text="In-House">
             <font>
                 <Font size="16.0" />
             </font></RadioButton>
-        <RadioButton fx:id="outSourcedRadioButton" layoutX="296.0" layoutY="39.0" mnemonicParsing="false" text="Outsourced">
+        <RadioButton fx:id="outSourcedRadioButton" layoutX="296.0" layoutY="39.0" mnemonicParsing="false" onAction="#outSourcedRadioButtonSelected" text="Outsourced">
             <font>
                 <Font size="16.0" />
             </font></RadioButton>
@@ -37,21 +37,21 @@
                     <font>
                         <Font size="16.0" />
                     </font></TextField>
-                <TextField fx:id="priceTextField" promptText="Price/Cost">
+                <TextField fx:id="partPriceTextField" promptText="Price/Cost">
                     <font>
                         <Font size="16.0" />
                     </font></TextField>
-                <TextField fx:id="maxPartTextField" maxWidth="86.0" prefWidth="86.0" promptText="Max">
+                <TextField fx:id="partMaxTextField" maxWidth="86.0" prefWidth="86.0" promptText="Max">
                     <font>
                         <Font size="16.0" />
                     </font></TextField>
-                <TextField fx:id="companyNameTextField" prefHeight="54.0" prefWidth="201.0" promptText="Company Name">
+                <TextField fx:id="partIDNameTextField" prefHeight="54.0" prefWidth="201.0" promptText="Company Name">
                     <font>
                         <Font size="16.0" />
                     </font></TextField>
             </children>
         </VBox>
-        <VBox layoutX="38.0" layoutY="84.0" prefHeight="322.0" prefWidth="134.0" spacing="32.0">
+        <VBox layoutX="38.0" layoutY="84.0" prefHeight="322.0" prefWidth="134.0" spacing="31.0">
             <children>
                 <Label text="ID">
                     <font>
@@ -78,7 +78,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label lineSpacing="15.0" text="Company Name">
+                <Label fx:id="inHouseOutSourceLabel" lineSpacing="15.0" text="Company Name">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -90,7 +90,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="minPartTextField" layoutX="424.0" layoutY="313.0" maxWidth="86.0" prefHeight="25.0" prefWidth="86.0" promptText="Min">
+        <TextField fx:id="partMinTextField" layoutX="424.0" layoutY="313.0" maxWidth="86.0" prefHeight="25.0" prefWidth="86.0" promptText="Min">
             <font>
                 <Font size="16.0" />
             </font></TextField>
