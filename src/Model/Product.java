@@ -13,15 +13,6 @@ public class Product {
     private final IntegerProperty minProductStock;
     private final IntegerProperty maxProductStock;
 
-    public Product() {
-        this.productID = new SimpleIntegerProperty();
-        this.productName = new SimpleStringProperty();
-        this.productPrice = new SimpleDoubleProperty();
-        this.productStock = new SimpleIntegerProperty();
-        this.minProductStock = new SimpleIntegerProperty();
-        this.maxProductStock = new SimpleIntegerProperty();
-    }
-
     public Product(int productID, String productName, double productPrice, int productStock, int minProductStock, int maxProductStock) {
         this.productID = new SimpleIntegerProperty(productID);
         this.productName = new SimpleStringProperty(productName);
@@ -30,7 +21,6 @@ public class Product {
         this.minProductStock = new SimpleIntegerProperty(minProductStock);
         this.maxProductStock = new SimpleIntegerProperty(maxProductStock);
     }
-
 
     public int getProductID() {
         return productID.get();

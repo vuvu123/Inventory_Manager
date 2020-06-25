@@ -38,6 +38,28 @@ public class Inventory {
         return null;
     }
 
+    public static Part lookUpPart(String partName) {
+        if (!allParts.isEmpty()) {
+            for (Part part : allParts) {
+                if (part.getPartName().contains(partName)) {
+                    return part;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Product lookUpProduct(String partName) {
+        if (!allParts.isEmpty()) {
+            for (Product product : allProducts) {
+                if (product.getProductName().contains(partName)) {
+                    return product;
+                }
+            }
+        }
+        return null;
+    }
+
     public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }

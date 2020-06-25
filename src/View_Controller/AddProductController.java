@@ -16,9 +16,6 @@ import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
 
-    @FXML RadioButton inHouseRadioButton;
-    @FXML RadioButton outSourcedRadioButton;
-
     public void openMainScreen(ActionEvent event) throws IOException {
         Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
         Scene mainScreenScene = new Scene(mainScreenParent);
