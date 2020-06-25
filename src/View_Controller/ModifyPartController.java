@@ -67,7 +67,6 @@ public class ModifyPartController implements Initializable {
         partIDNameTextField.setPromptText("Machine ID");
         inHouseRadioButton.setSelected(true);
         outSourcedRadioButton.setSelected(false);
-
     }
 
     @FXML

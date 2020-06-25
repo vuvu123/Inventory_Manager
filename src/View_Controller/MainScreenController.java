@@ -130,8 +130,6 @@ public class MainScreenController implements Initializable {
 //            partsTableView.setItems(Inventory.lookUpPart(searchPart));
 //        }
 
-
-
     }
 
     @FXML
