@@ -66,7 +66,7 @@
                               <Font size="16.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="invTextField" maxWidth="80.0" prefWidth="80.0" promptText="Inv">
+                        <TextField fx:id="productInvTextField" maxWidth="80.0" prefWidth="80.0" promptText="Inv">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -76,44 +76,45 @@
                               <Font size="16.0" />
                            </font>
                         </TextField>
-                        <TextField maxWidth="80.0" prefWidth="80.0" promptText="Max">
+                        <TextField fx:id="productMaxTextField" maxWidth="80.0" prefWidth="80.0" promptText="Max">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </TextField>
                      </children>
                   </VBox>
-                  <TextField layoutX="258.0" layoutY="313.0" prefWidth="80.0" promptText="Min">
+                  <TextField fx:id="productMinTextField" layoutX="258.0" layoutY="313.0" prefWidth="80.0" promptText="Min">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <TableView layoutX="443.0" layoutY="63.0" prefHeight="114.0" prefWidth="435.0">
+                  <TableView fx:id="modifyProductPartsTableView" layoutX="443.0" layoutY="63.0" prefHeight="114.0" prefWidth="435.0">
                      <columns>
-                        <TableColumn prefWidth="110.0" text="Part ID" />
-                        <TableColumn prefWidth="110.0" text="Part Name" />
-                        <TableColumn prefWidth="110.0" text="Inventory Level" />
-                        <TableColumn prefWidth="110.0" text="Price per Unit" />
+                        <TableColumn fx:id="partIDTableColumn" prefWidth="110.0" text="Part ID" />
+                        <TableColumn fx:id="partNameTableColumn" prefWidth="110.0" text="Part Name" />
+                        <TableColumn fx:id="partInvTableColumn" prefWidth="110.0" text="Inventory Level" />
+                        <TableColumn fx:id="partPriceTableColumn" prefWidth="110.0" text="Price per Unit" />
                      </columns>
                   </TableView>
-                  <TableView layoutX="443.0" layoutY="225.0" prefHeight="114.0" prefWidth="435.0">
+                  <TableView fx:id="associatedPartsTableView" layoutX="443.0" layoutY="225.0" prefHeight="114.0" prefWidth="435.0">
                      <columns>
-                        <TableColumn prefWidth="110.0" text="Part ID" />
-                        <TableColumn prefWidth="110.0" text="Part Name" />
-                        <TableColumn prefWidth="110.0" text="Inventory Level" />
-                        <TableColumn prefWidth="110.0" text="Price per Unit" />
+                        <TableColumn fx:id="assocPartIDTableColumn" prefWidth="110.0" text="Part ID" />
+                        <TableColumn fx:id="assocPartNameTableColumn" prefWidth="110.0" text="Part Name" />
+                        <TableColumn fx:id="assocPartInvTableColumn" prefWidth="110.0" text="Inventory Level" />
+                        <TableColumn fx:id="assocPartPriceTableColumn" prefWidth="110.0" text="Price per Unit" />
                      </columns>
                   </TableView>
-                  <Button layoutX="586.0" layoutY="16.0" maxWidth="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Search" />
-                  <Button layoutX="778.0" layoutY="182.0" maxWidth="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Add" />
-                  <Button layoutX="778.0" layoutY="346.0" maxWidth="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Delete" />
-                  <Button layoutX="678.0" layoutY="384.0" maxWidth="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Save" />
+                  <Button layoutX="527.0" layoutY="16.0" maxWidth="100.0" mnemonicParsing="false" onAction="#modifyProductSearchPartButton" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Search" />
+                  <Button layoutX="778.0" layoutY="182.0" maxWidth="100.0" mnemonicParsing="false" onAction="#addAssociatedPartButton" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Add" />
+                  <Button layoutX="778.0" layoutY="346.0" maxWidth="100.0" mnemonicParsing="false" onAction="#deleteAssociatedPartButton" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Delete" />
+                  <Button layoutX="678.0" layoutY="384.0" maxWidth="100.0" mnemonicParsing="false" onAction="#modifyProductSaveButtonClicked" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Save" />
                   <Button layoutX="778.0" layoutY="384.0" maxWidth="100.0" mnemonicParsing="false" onAction="#openMainScreen" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Cancel" />
-                  <TextField layoutX="670.0" layoutY="15.0">
+                  <TextField fx:id="partSearchTextField" layoutX="609.0" layoutY="15.0">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </TextField>
+                  <Button layoutX="816.0" layoutY="16.0" maxWidth="100.0" mnemonicParsing="false" onAction="#modifyProductClearSearchPart" prefHeight="35.0" prefWidth="60.0" style="-fx-border-color: black; -fx-border-radius: 5;" text="Clear" />
                </children>
             </AnchorPane>
          </children>
