@@ -38,6 +38,7 @@ public class ModifyPartController implements Initializable {
     @FXML private Label inHouseOutSourceLabel;
     private ToggleGroup partType;
 
+    private String exceptionMessage = new String();
     private boolean isOutsourced;
     private int partID;
     private int partIndex = getSelectedPartIndex();
@@ -80,8 +81,65 @@ public class ModifyPartController implements Initializable {
     }
 
     @FXML
-    private void ModifyPartsSaveButtonClicked() {
+    private void modifyPartSaveButtonClicked(ActionEvent event) throws IOException {
+        String partName = partNameTextField.getText().trim();
+        String partInv = partInvTextField.getText().trim();
+        String partPrice = partPriceTextField.getText().trim();
+        String partMax = partMaxTextField.getText().trim();
+        String partMin = partMinTextField.getText().trim();
+        String partIDName = partIDNameTextField.getText().trim();
 
+        try {
+            exceptionMessage = Part.partValidation(partName, Integer.parseInt(partMin), Integer.parseInt(partMax),
+                    Integer.parseInt(partInv), Double.parseDouble(partPrice), exceptionMessage);
+
+            if (exceptionMessage.length() > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Reason part did not pass validation:");
+                alert.setContentText(exceptionMessage);
+                alert.showAndWait();
+                exceptionMessage = "";
+            } else {
+                if (isOutsourced == false) {
+                    InHouse ihPart = new InHouse();
+
+                    ihPart.setPartID(partID);
+                    ihPart.setPartName(partName);
+                    ihPart.setPartPrice(Double.parseDouble(partPrice));
+                    ihPart.setPartStock(Integer.parseInt(partInv));
+                    ihPart.setMinPartStock(Integer.parseInt(partMin));
+                    ihPart.setMaxPartStock(Integer.parseInt(partMax));
+                    ihPart.setMachineID(Integer.parseInt(partIDName));
+
+                    Inventory.updatePart(partIndex, ihPart);
+                } else {
+                    OutSourced osPart = new OutSourced();
+
+                    osPart.setPartID(partID);
+                    osPart.setPartName(partName);
+                    osPart.setPartPrice(Double.parseDouble(partPrice));
+                    osPart.setPartStock(Integer.parseInt(partInv));
+                    osPart.setMinPartStock(Integer.parseInt(partMin));
+                    osPart.setMaxPartStock(Integer.parseInt(partMax));
+                    osPart.setCompanyName(partIDName);
+
+                    Inventory.updatePart(partIndex, osPart);
+                }
+
+                Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+                Scene mainScreenScene = new Scene(mainScreenParent);
+                Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                mainScreenStage.setScene(mainScreenScene);
+                mainScreenStage.show();
+            }
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error Adding Part");
+            alert.setContentText("Form contains blank fields.");
+            alert.showAndWait();
+        }
     }
 
     @Override
