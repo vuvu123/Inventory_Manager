@@ -122,7 +122,7 @@ public class ModifyProductController implements Initializable {
                 product.setMaxProductStock(Integer.parseInt(productMax));
                 product.setAssociatedParts(assocParts);
 
-                Inventory.addProduct(product);
+                Inventory.updateProduct(productIndex, product);
 
                 //Back to main screen
                 Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));

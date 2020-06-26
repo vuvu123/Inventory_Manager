@@ -21,6 +21,11 @@ import java.util.ResourceBundle;
 
 import static Model.Inventory.*;
 
+/**
+ *  Kenneth Vu - C482
+ *  MainScreenController Class
+ */
+
 public class MainScreenController implements Initializable {
 
     @FXML private TableView<Part> partsTableView;
