@@ -6,6 +6,11 @@ public class OutSourced extends Part {
 
     private final SimpleStringProperty companyName;
 
+    public OutSourced() {
+        super();
+        this.companyName = new SimpleStringProperty();
+    }
+
     public OutSourced(int partID, String partName, double partPrice, int partStock, int min, int max, String companyName) {
         super(partID, partName, partPrice, partStock, min, max);
         this.companyName = new SimpleStringProperty(companyName);

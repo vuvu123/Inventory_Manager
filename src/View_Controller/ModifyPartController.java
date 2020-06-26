@@ -63,6 +63,7 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     private void inHouseRadioButtonSelected() {
+        isOutsourced = false;
         inHouseOutSourceLabel.setText("Machine ID");
         partIDNameTextField.setPromptText("Machine ID");
         inHouseRadioButton.setSelected(true);

@@ -10,6 +10,15 @@ public abstract class Part {
     private final IntegerProperty minPartStock;
     private final IntegerProperty maxPartStock;
 
+    public Part() {
+        this.partID = new SimpleIntegerProperty();
+        this.partName = new SimpleStringProperty();
+        this.partPrice = new SimpleDoubleProperty();
+        this.partStock = new SimpleIntegerProperty();
+        this.minPartStock = new SimpleIntegerProperty();
+        this.maxPartStock = new SimpleIntegerProperty();
+    }
+
     public Part(int partID, String partName, double partPrice, int partStock, int min, int max) {
         this.partID = new SimpleIntegerProperty(partID);
         this.partName = new SimpleStringProperty(partName);
@@ -89,5 +98,25 @@ public abstract class Part {
 
     public void setMaxPartStock(int maxPartStock) {
         this.maxPartStock.set(maxPartStock);
+    }
+
+    public static String partValidation(String name, int min, int max, int inv, double price, String eMessage) {
+
+        if (name.isEmpty())
+            eMessage = eMessage + "Name text field is blank.\n";
+
+        if (inv <= 0)
+            eMessage = eMessage + "Inventory must be greater than 0.\n";
+
+        if (price <= 0)
+            eMessage = eMessage + "Price must be greater than $0.\n";
+
+        if (min > max)
+            eMessage = eMessage + "Inventory minimum cannot be less than maximum.\n";
+
+        if (inv < min || inv > max)
+            eMessage = eMessage + "Inventory must be between minimum and maximum values.\n";
+
+        return eMessage;
     }
 }

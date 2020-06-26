@@ -38,26 +38,45 @@ public class Inventory {
         return null;
     }
 
-    public static Part lookUpPart(String partName) {
+    public static ObservableList<Part> lookUpPart(String partName) {
+        String sanitizedPartName = partName.toLowerCase().trim();
+
         if (!allParts.isEmpty()) {
+            ObservableList<Part> searchPartsList = FXCollections.observableArrayList();
             for (Part part : allParts) {
-                if (part.getPartName().contains(partName)) {
-                    return part;
+                if (part.getPartName().toLowerCase().contains(sanitizedPartName)) {
+                    searchPartsList.add(part);
                 }
             }
+            return searchPartsList;
         }
         return null;
     }
 
-    public static Product lookUpProduct(String partName) {
+    public static ObservableList<Product> lookUpProduct(String productName) {
+        String sanitizedProductName = productName.toLowerCase().trim();
+
         if (!allParts.isEmpty()) {
+            ObservableList<Product> searchProductsList = FXCollections.observableArrayList();
             for (Product product : allProducts) {
-                if (product.getProductName().contains(partName)) {
-                    return product;
+                if (product.getProductName().toLowerCase().contains(sanitizedProductName)) {
+                    searchProductsList.add(product);
                 }
             }
+            return searchProductsList;
         }
         return null;
+    }
+
+    public static boolean validatePartDelete(Part part) {
+        boolean isFound = false;
+
+        for (Product product : allProducts) {
+            if (product.getAllAssociatedParts().contains(part)) {
+                isFound = true;
+            }
+        }
+        return isFound;
     }
 
     public static void updatePart(int index, Part selectedPart) {

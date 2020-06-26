@@ -3,8 +3,6 @@ package View_Controller;
 import Main.Main;
 import Model.*;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +19,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Model.Inventory.getAllParts;
-import static Model.Inventory.getAllProducts;
+import static Model.Inventory.*;
 
 public class MainScreenController implements Initializable {
 
@@ -106,30 +103,46 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void deletePartButton(ActionEvent event) throws IOException {
-        int selectedIndex = partsTableView.getSelectionModel().getSelectedIndex();
+        selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+        selectedPartIndex = partsTableView.getSelectionModel().getSelectedIndex();
 
-        // Need to add prompt to confirm deletion of part
+        if (selectedPartIndex >= 0) {
+            if (validatePartDelete(selectedPart)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Part Cannot Be Deleted");
+                alert.setContentText("Part is associated with a product.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete Part");
+                alert.setHeaderText("Confirm Delete Part");
+                alert.setContentText("Are you sure you want to delete " + selectedPart.getPartName() + "?");
+                Optional<ButtonType> result = alert.showAndWait();
 
-        if (selectedIndex >= 0) {
-            partsTableView.getItems().remove(selectedPartIndex);
+                if (result.get() == ButtonType.OK) {
+                    deletePart(selectedPart);
+                    updatePartsTableView();
+                    System.out.println("Part " + selectedPart.getPartName() + " was deleted.");
+                } else {
+                    System.out.println("Part " + selectedPart.getPartName() + " delete cancelled.");
+                }
+            }
         } else {
             // Nothing selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No selection");
             alert.setHeaderText("No Part Selected");
-            alert.setContentText("Please select a part on the table.");
+            alert.setContentText("Please select a Part on the table.");
             alert.showAndWait();
         }
     }
 
     @FXML
     private void searchPartButton(ActionEvent event) throws IOException {
-        String searchPart = partSearchTextField.getText();
-
-//        if (!partSearchTextField.getText().trim().isEmpty()) {
-//            partsTableView.setItems(Inventory.lookUpPart(searchPart));
-//        }
-
+        String searchPart = partSearchTextField.getText().trim();
+        partsTableView.setItems(Inventory.lookUpPart(searchPart));
+        partsTableView.refresh();
     }
 
     @FXML
@@ -163,12 +176,24 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void deleteProductButton(ActionEvent event) throws IOException {
-        int selectedIndex = productsTableView.getSelectionModel().getSelectedIndex();
+        selectedProduct = productsTableView.getSelectionModel().getSelectedItem();
+        selectedProductIndex = productsTableView.getSelectionModel().getSelectedIndex();
 
-        // Need to add confirm alert box if
+        if (selectedProductIndex >= 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Product");
+            alert.setHeaderText("Confirm Delete Product");
+            alert.setContentText("Are you sure you want to delete product " + selectedProduct.getProductName() + "?");
+            Optional<ButtonType> result = alert.showAndWait();
 
-        if (selectedIndex >= 0) {
-            productsTableView.getItems().remove(selectedProductIndex);
+            if (result.get() == ButtonType.OK) {
+                deleteProduct(selectedProduct);
+                updateProductsTableView();
+                System.out.println("Product " + selectedProduct.getProductName() + " was deleted.");
+            } else {
+                System.out.println("Product " + selectedProduct.getProductName() + " delete cancelled.");
+            }
+
         } else {
             // Nothing selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -181,7 +206,9 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void searchProductButton(ActionEvent event) throws IOException {
-        // TO DO
+        String searchProduct = productSearchTextField.getText().trim();
+        productsTableView.setItems(Inventory.lookUpProduct(searchProduct));
+        productsTableView.refresh();
     }
 
     @FXML

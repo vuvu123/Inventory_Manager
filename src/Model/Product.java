@@ -112,4 +112,33 @@ public class Product {
         return false;
     }
 
+    public static String productValidation(String name, int min, int max, int inv, double price, ObservableList<Part> parts, String eMessage) {
+        double sumOfParts = 0.00;
+        for (Part part : parts)
+            sumOfParts += part.getPartPrice();
+
+        if (name.isEmpty())
+            eMessage = eMessage + "Name text field is blank.\n";
+
+        if (inv <= 0)
+            eMessage = eMessage + "Inventory must be greater than 0.\n";
+
+        if (price <= 0)
+            eMessage = eMessage + "Price must be greater than $0.\n";
+
+        if (min > max)
+            eMessage = eMessage + "Inventory minimum cannot be less than maximum.\n";
+
+        if (inv < min || inv > max)
+            eMessage = eMessage + "Inventory must be between minimum and maximum values.\n";
+
+        if (parts.isEmpty())
+            eMessage = eMessage + "Product must contain at least one part.\n";
+
+        if (sumOfParts > price)
+            eMessage = eMessage + "Product price must be greater than total cost of parts\n.";
+
+        return eMessage;
+    }
+
 }

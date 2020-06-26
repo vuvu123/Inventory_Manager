@@ -1,6 +1,9 @@
 package View_Controller;
 
+import Model.InHouse;
 import Model.Inventory;
+import Model.OutSourced;
+import Model.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +37,7 @@ public class AddPartController implements Initializable {
 
     private int partID;
     private boolean isOutsourced;
+    private String exceptionMessage = new String();
 
     @FXML
     private void openMainScreen(ActionEvent event) throws IOException {
@@ -56,22 +60,69 @@ public class AddPartController implements Initializable {
 
     @FXML
     private void addPartSaveButtonClicked(ActionEvent event) throws IOException {
-        String partName = partNameTextField.getText();
-        String partInv = partInvTextField.getText();
-        String partPrice = partPriceTextField.getText();
-        String partMax = partMaxTextField.getText();
-        String partMin = partMinTextField.getText();
-        String partIDName = partIDNameTextField.getText();
+        String partName = partNameTextField.getText().trim();
+        String partInv = partInvTextField.getText().trim();
+        String partPrice = partPriceTextField.getText().trim();
+        String partMax = partMaxTextField.getText().trim();
+        String partMin = partMinTextField.getText().trim();
+        String partIDName = partIDNameTextField.getText().trim();
 
         try {
+            exceptionMessage = Part.partValidation(partName, Integer.parseInt(partMin), Integer.parseInt(partMax),
+                                Integer.parseInt(partInv), Double.parseDouble(partPrice), exceptionMessage);
 
+            if (exceptionMessage.length() > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Reason part did not pass validation:");
+                alert.setContentText(exceptionMessage);
+                alert.showAndWait();
+                exceptionMessage = "";
+            } else {
+                if (isOutsourced == false) {
+                    InHouse ihPart = new InHouse();
+
+                    ihPart.setPartID(partID);
+                    ihPart.setPartName(partName);
+                    ihPart.setPartPrice(Double.parseDouble(partPrice));
+                    ihPart.setPartStock(Integer.parseInt(partInv));
+                    ihPart.setMinPartStock(Integer.parseInt(partMin));
+                    ihPart.setMaxPartStock(Integer.parseInt(partMax));
+                    ihPart.setMachineID(Integer.parseInt(partIDName));
+
+                    Inventory.addPart(ihPart);
+                } else {
+                    OutSourced osPart = new OutSourced();
+
+                    osPart.setPartID(partID);
+                    osPart.setPartName(partName);
+                    osPart.setPartPrice(Double.parseDouble(partPrice));
+                    osPart.setPartStock(Integer.parseInt(partInv));
+                    osPart.setMinPartStock(Integer.parseInt(partMin));
+                    osPart.setMaxPartStock(Integer.parseInt(partMax));
+                    osPart.setCompanyName(partIDName);
+
+                    Inventory.addPart(osPart);
+                }
+
+                Parent mainScreenParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+                Scene mainScreenScene = new Scene(mainScreenParent);
+                Stage mainScreenStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                mainScreenStage.setScene(mainScreenScene);
+                mainScreenStage.show();
+            }
         } catch (NumberFormatException e) {
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error Adding Part");
+            alert.setContentText("Form contains blank fields.");
+            alert.showAndWait();
         }
     }
 
     @FXML
     private void inHouseRadioButtonSelected() {
+        isOutsourced = false;
         inHouseOutSourceLabel.setText("Machine ID");
         partIDNameTextField.setPromptText("Machine ID");
         inHouseRadioButton.setSelected(true);
@@ -97,6 +148,8 @@ public class AddPartController implements Initializable {
         // Set radio buttons to toggleGroup partType
         inHouseRadioButton.setToggleGroup(partType);
         outSourcedRadioButton.setToggleGroup(partType);
+
+        inHouseRadioButtonSelected();
 
     }
 }
