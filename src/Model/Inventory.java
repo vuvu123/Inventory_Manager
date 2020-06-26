@@ -111,8 +111,7 @@ public class Inventory {
         return ++partIDCount;
     }
 
-    public static int getProductIDCount() {
-        return ++productIDCount;
+    public static int getProductIDCount() { return ++productIDCount;
     }
 
     public static ObservableList<Part> getAllParts() {

@@ -252,6 +252,7 @@ public class MainScreenController implements Initializable {
 
         updatePartsTableView();
         updateProductsTableView();
+
     }
 
 }

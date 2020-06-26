@@ -13,6 +13,15 @@ public class Product {
     private final IntegerProperty minProductStock;
     private final IntegerProperty maxProductStock;
 
+    public Product() {
+        this.productID = new SimpleIntegerProperty();
+        this.productName = new SimpleStringProperty();
+        this.productPrice = new SimpleDoubleProperty();
+        this.productStock = new SimpleIntegerProperty();
+        this.minProductStock = new SimpleIntegerProperty();
+        this.maxProductStock = new SimpleIntegerProperty();
+    }
+
     public Product(int productID, String productName, double productPrice, int productStock, int minProductStock, int maxProductStock) {
         this.productID = new SimpleIntegerProperty(productID);
         this.productName = new SimpleStringProperty(productName);
@@ -98,8 +107,12 @@ public class Product {
         return associatedParts;
     }
 
-    public void addAssociatedPart(Part partAdded) {
-        this.associatedParts.add(partAdded);
+    public void addAssociatedPart(Part partsAdded) {
+        this.associatedParts.add(partsAdded);
+    }
+
+    public void setAssociatedParts(ObservableList<Part> partsAdded) {
+        this.associatedParts = partsAdded;
     }
 
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
@@ -118,7 +131,7 @@ public class Product {
             sumOfParts += part.getPartPrice();
 
         if (name.isEmpty())
-            eMessage = eMessage + "Name text field is blank.\n";
+            eMessage = eMessage + "Product name field is blank.\n";
 
         if (inv <= 0)
             eMessage = eMessage + "Inventory must be greater than 0.\n";
@@ -136,7 +149,7 @@ public class Product {
             eMessage = eMessage + "Product must contain at least one part.\n";
 
         if (sumOfParts > price)
-            eMessage = eMessage + "Product price must be greater than total cost of parts\n.";
+            eMessage = eMessage + "Product price must be greater than total cost of parts.\n";
 
         return eMessage;
     }
